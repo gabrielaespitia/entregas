@@ -22,16 +22,16 @@ void setup() {
   colorMode(HSB, 360, 100, 100);
 
   // Colores pastel para las 12 horas del día (puedes modificarlos)
-  coloresDia[0]  = color(0,   30, 100);  // rojo
-  coloresDia[1]  = color(30,  40, 100);  // naranja
-  coloresDia[2]  = color(60,  40, 100);  // amarillo
-  coloresDia[3]  = color(90,  30, 100);  // verde 1
+  coloresDia[0]  = color(0, 30, 100);  // rojo
+  coloresDia[1]  = color(30, 40, 100);  // naranja
+  coloresDia[2]  = color(60, 40, 100);  // amarillo
+  coloresDia[3]  = color(90, 30, 100);  // verde 1
   coloresDia[4]  = color(120, 30, 100);  // verde 2
   coloresDia[5]  = color(160, 30, 100);  // turquesa
   coloresDia[6]  = color(200, 40, 100);  // azul cielo
   coloresDia[7]  = color(240, 30, 100);  // azul
   coloresDia[8]  = color(280, 30, 100);  // morado
-  coloresDia[9]  = color(310, 30, 100);  // rosado 
+  coloresDia[9]  = color(310, 30, 100);  // rosado
   coloresDia[10] = color(330, 30, 100);  // palo rosa
   coloresDia[11] = color(350, 20, 100);  // coral
 }
@@ -39,13 +39,13 @@ void setup() {
 
 
 void draw() {
-  // obtiene el tiempo del computador 
+  // obtiene el tiempo del computador
   h = hour();
   m = minute();
   s = second();
 
-// convierte los valores de h, m, s en un rango de 0 a 1 (dividiendolo por el valor max de cada uno)
-// es para las animaciones mas fluidas
+  // convierte los valores de h, m, s en un rango de 0 a 1 (dividiendolo por el valor max de cada uno)
+  // es para las animaciones mas fluidas
   float mNorm = m / 59.0;
   float sNorm = s / 59.0;
   float hNorm = h / 23.0;
@@ -62,39 +62,38 @@ void draw() {
     // si es de noche... cambia solo el brillo de la base
     float hVal = hue(base);
     float sVal = saturation(base);
-    float bVal = brightness(base) * 0.4; // reduce el brillo al 40% 
+    float bVal = brightness(base) * 0.4; // reduce el brillo al 40%
     base = color(hVal, sVal, bVal);
   }
-// cambia de color cada hora
+  // cambia de color cada hora
   background(base);
 
 
   // cuadricula de puntos que palpitan cada sec
   for (int i = 0; i <= cols; i++) {
     for (int j = 0; j < rows; j++) {
-      
+
       // margenes de la cuadricula, posicion de los puntos
       float xBase = map(i, 0, cols, 40, width - 40);
       float yBase = map(j, 0, rows, 40, height - 20);
-      
-// con sin y cos se crea un efecto de onda
-// y framecount para palpito de los puntos, * 0.02 hace el movimieto mas lento
-// j= fila (x), i= columna (y), tienen patron ondulado
-// multiplico sNorm * 10 que da un latido cada segundo, sincronizado con el computador.
-// cuando el segundo avanza, el latido se fortalece.
 
- float offsetX = sin(j / 2.0 + frameCount * 0.02 + sNorm * 10) * ( 5 + 10 * sNorm);
- float offsetY = cos(i / 2.0 + frameCount * 0.02 + sNorm * 10) * (5 + 10 * sNorm);
+      // con sin y cos se crea un efecto de onda
+      // y framecount para palpito de los puntos, * 0.02 hace el movimieto mas lento
+      // j= fila (x), i= columna (y), tienen patron ondulado
+      // multiplico sNorm * 10 que da un latido cada segundo, sincronizado con el computador.
+      // cuando el segundo avanza, el latido se fortalece.
+
+      float offsetX = sin(j / 2.0 + frameCount * 0.02 + sNorm * 10) * ( 5 + 10 * sNorm);
+      float offsetY = cos(i / 2.0 + frameCount * 0.02 + sNorm * 10) * (5 + 10 * sNorm);
 
 
       // Cambio de color por minuto de blanco a gris claro, de filas menores al numero de minuto que ya paso
       if (j < m) {
         fill(0, 0, 60); // gris claro
-        
       } else {
         fill(0, 0, 100); // blanco
       }
-// el dibujo de cada punto con su animacion
+      // el dibujo de cada punto con su animacion
       ellipse(xBase + offsetX, yBase + offsetY, 4, 4);
     }
   }

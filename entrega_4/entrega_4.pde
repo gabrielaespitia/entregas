@@ -79,11 +79,12 @@ void draw() {
       
 // con sin y cos se crea un efecto de onda
 // y framecount para palpito de los puntos, * 0.02 hace el movimieto mas lento
-// j= fila (x), i= columna (y)
-// multiplico por segundo y hora para que la onda tenga una relacion con el tiempo y cambie durante.
+// j= fila (x), i= columna (y), tienen patron ondulado
+// multiplico sNorm * 10 que da un latido cada segundo, sincronizado con el computador.
+// cuando el segundo avanza, el latido se fortalece.
 
- float offsetX = sin(j / 2.0 + frameCount * 0.02 + hNorm * 10) * 10 * mNorm;
- float offsetY = cos(i / 2.0 + frameCount * 0.02 + sNorm * 10) * 10 * hNorm;
+ float offsetX = sin(j / 2.0 + frameCount * 0.02 + sNorm * 10) * ( 5 + 10 * sNorm);
+ float offsetY = cos(i / 2.0 + frameCount * 0.02 + sNorm * 10) * (5 + 10 * sNorm);
 
 
       // Cambio de color por minuto de blanco a gris claro, de filas menores al numero de minuto que ya paso
